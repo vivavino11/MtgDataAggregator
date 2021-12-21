@@ -18,4 +18,3 @@ class DataAccess:
         response = cur.fetchall()
         cur.close()
         conn.close()
-
