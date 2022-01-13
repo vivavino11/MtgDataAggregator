@@ -13,7 +13,3 @@ def hello_world():
 def get_sets():
     response = Set.all()
     return response
-
-@app.route("/collections/")
-def add_card(card):
-    return f'Card Added'
