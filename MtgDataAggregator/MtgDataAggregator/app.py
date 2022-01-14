@@ -1,14 +1,14 @@
 #$env:FLASK_APP = "Controller.py"
 #$env:FLASK_ENV = "development"
 #flask run
-
-from mtgsdk import Set
+from MtgAccess import MtgApiClient
 
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-    response = Set.all()
+    mtg_access = MtgApiClient()
+    response = mtg_access.GetAllSets()
     test = response
 
 
