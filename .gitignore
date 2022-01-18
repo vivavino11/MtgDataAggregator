@@ -2,3 +2,4 @@ MtgDataAggregator/MtgDataAggregatorWithoutHelp/Config/db.ini
 MtgDataAggregator/MtgDataAggregator/Config/db.ini
 pgAdmin/docker-compose.yml
 MtgDataAggregator/MtgDataAggregatorWithAssistance/Config/db.ini
+MtgDataAggregator/FileIngester/Config/url.ini
