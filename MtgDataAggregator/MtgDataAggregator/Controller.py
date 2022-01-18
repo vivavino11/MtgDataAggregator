@@ -1,7 +1,9 @@
-from mtgsdk import Set
-from flask import Flask
+from flask import Flask, jsonify
+from MtgAccess import MtgApiClient
+import json
 
 app = Flask(__name__)
+app.debug = True
 
 
 @app.route("/")
@@ -11,5 +13,6 @@ def hello_world():
 
 @app.route("/sets")
 def get_sets():
-    response = Set.all()
-    return response
+    mtg_access = MtgApiClient()
+    response = mtg_access.GetAllSets()
+    return json.dumps(response)
