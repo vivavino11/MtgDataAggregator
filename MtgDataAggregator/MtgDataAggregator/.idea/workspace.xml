@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb0c35b0-d1ec-4694-a13f-65d7873dc725" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../MtgDataAggregatorWithAssistance/Config/db.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MtgDataAggregatorWithAssistance/Controller.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MtgDataAggregatorWithAssistance/DataAccess.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MtgDataAggregatorWithAssistance/DatabaseConfig..py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MtgDataAggregatorWithAssistance/MtgAccess.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MtgAccess.py" beforeDir="false" afterPath="$PROJECT_DIR$/MtgAccess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MtgDataAggregatorWithAssistance/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MtgDataAggregatorWithAssistance/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,12 +108,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Controller.py</url>
-          <line>18</line>
+          <line>17</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Controller.py</url>
-          <line>17</line>
+          <line>16</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
