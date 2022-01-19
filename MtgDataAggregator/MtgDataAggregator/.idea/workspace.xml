@@ -5,28 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb0c35b0-d1ec-4694-a13f-65d7873dc725" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../FileIngester/Config/url.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FileIngester/Models/Card.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FileIngester/MtgAggregatorClientInterface.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FileIngester/MtgAggregatorHttpClient.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FileIngester/UrlConfig.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FileIngesterWIthAssistance/Card.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FileIngesterWIthAssistance/MtgAggregatorClientHttpClient.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FileIngesterWIthAssistance/MtgAggregatorClientInterface.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Card.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Collection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Location.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Card.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Collection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Location.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MtgDataAggregatorBusinessComponent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FileIngester/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../FileIngester/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FileIngesterWIthAssistance/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../FileIngesterWIthAssistance/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mapper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataAccess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MtgAccess.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Card.py" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Card.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Collection.py" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Collection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Location.py" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Location.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Collection.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Collection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Location.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Location.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MtgDataAggregatorBusinessComponent.py" beforeDir="false" afterPath="$PROJECT_DIR$/MtgDataAggregatorBusinessComponent.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +51,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">

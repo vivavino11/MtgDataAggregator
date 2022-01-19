@@ -3,5 +3,6 @@ from dataclasses import dataclass
 
 @dataclass
 class Collection:
-    name: str
+    collection_id: int = -1
+    name: str = None
     

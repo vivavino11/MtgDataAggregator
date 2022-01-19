@@ -3,5 +3,6 @@ from dataclasses import dataclass
 
 @dataclass
 class Location:
-    name: str
-    descriptions: str
+    location_id: int = -1
+    name: str = None
+    descriptions: str = ""

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Location:
-    location_id: int
-    collection_id: int
-    name: str
-    description: str
+    location_id: int = -1
+    collection_id: int = -1
+    name: str = None
+    description: str = ""
