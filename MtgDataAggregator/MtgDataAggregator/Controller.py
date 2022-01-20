@@ -1,13 +1,13 @@
 # $env:FLASK_APP = "Controller.py"
 # $env:FLASK_ENV = "development"
 
-from flask import Flask, url_for
+from flask import Flask, url_for, jsonify, json
 from flask import request
 
 from BusinessComponent import BusinessComponent
 from DataAccess import DataAccess
 from DatabaseConfig import DatabaseConfig
-
+from Models.Location import Location
 
 app = Flask(__name__)
 app.debug = True
@@ -27,7 +27,7 @@ def get_collections():
         collections = business_component.get_collections()
         if len(collections) == 0:
             return 'Collection Not Found', 404
-        return collections, 200
+        return jsonify(collections), 200
     except Exception as e:
         return str(e), 500
 
@@ -38,10 +38,10 @@ def create_collection():
         configuration = DatabaseConfig()
         data_access = DataAccess(configuration)
         business_component = BusinessComponent(data_access)
-        collection = business_component.add_collection(request.json)
+        collection = business_component.add_collection(request.json['name'])
         if collection is None:
             return 'Collection Not Created', 500
-        return collection, 201
+        return url_for('get_collection', collection_id=collection), 201
     except Exception as e:
         return str(e), 500
 
@@ -55,7 +55,7 @@ def get_collection(collection_id):
         collection = business_component.get_collection_by_id(collection_id)
         if collection is None:
             return 'Collection Not Found', 404
-        return collection, 200
+        return jsonify(collection), 200
     except Exception as e:
         return str(e), 500
 
@@ -69,7 +69,7 @@ def get_collection_locations(collection_id):
         locations = business_component.get_locations(collection_id)
         if len(locations) == 0:
             return 'Collection Not Found', 404
-        return locations, 200
+        return jsonify(locations), 200
     except Exception as e:
         return str(e), 500
 
@@ -80,10 +80,11 @@ def create_collection_location(collection_id):
         configuration = DatabaseConfig()
         data_access = DataAccess(configuration)
         business_component = BusinessComponent(data_access)
-        location = business_component.add_location(collection_id, request.json)
+        raw_location = Location(request.json['name'], request.json['description'])
+        location = business_component.add_location(collection_id, raw_location)
         if location is None:
             return 'Location Not Created', 500
-        return location, 201
+        return url_for('get_collection_location', collection_id=collection_id, location_id=location), 201
     except Exception as e:
         return str(e), 500
 
@@ -97,9 +98,10 @@ def get_collection_location(collection_id, location_id):
         location = business_component.get_location_by_id(collection_id, location_id)
         if location is None:
             return 'Location Not Found', 404
-        return location, 200
+        return jsonify(location), 200
     except Exception as e:
         return str(e), 500
+
 
 @app.route('/collections/<collection_id>/locations/<location_id>/cards', methods=['GET'])
 def get_collection_location_cards(collection_id, location_id):
@@ -110,7 +112,7 @@ def get_collection_location_cards(collection_id, location_id):
         cards = business_component.get_cards(collection_id, location_id)
         if len(cards) == 0:
             return 'Location Not Found', 404
-        return cards, 200
+        return jsonify(cards), 200
     except Exception as e:
         return str(e), 500
 
@@ -121,10 +123,11 @@ def create_collection_location_card(collection_id, location_id):
         configuration = DatabaseConfig()
         data_access = DataAccess(configuration)
         business_component = BusinessComponent(data_access)
-        card = business_component.add_card(collection_id, location_id, request.json)
-        if card is None:
+        card_id = business_component.add_card(collection_id, location_id, request.json)
+        if card_id is None:
             return 'Card Not Created', 500
-        return card, 201
+        return url_from('get_collection_location_card',
+                        collection_id=collection_id, location_id=location_id, card_id=card_id), 201
     except Exception as e:
         return str(e), 500
 
@@ -138,6 +141,6 @@ def get_collection_location_card(collection_id, location_id, card_id):
         card = business_component.get_card_by_id(collection_id, location_id, card_id)
         if card is None:
             return 'Card Not Found', 404
-        return card, 200
+        return jsonify(card), 200
     except Exception as e:
         return str(e), 500

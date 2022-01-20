@@ -39,8 +39,8 @@ class BusinessComponent:
         location = map_domain_location_to_model_location(domain_location)
         return location
 
-    def add_location(self, collection_id, location_name):
-        location_id = self.data_access.add_location(collection_id, location_name)
+    def add_location(self, collection_id, location):
+        location_id = self.data_access.add_location(collection_id, location.name, location.description)
         return location_id
 
     def get_cards(self, collection_id, location_id):

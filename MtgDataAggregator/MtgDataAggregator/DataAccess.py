@@ -7,11 +7,11 @@ from Domain.Location import Location
 class DataAccess:
     def __init__(self, configuration):
         self.configuration = configuration
-        host = configuration.get('host')
-        database = configuration.get('dbname')
-        user = configuration.get('user')
-        password = configuration.get('password')
-        port = configuration.get('port')
+        host = configuration.get_host()
+        database = configuration.get_dbname()
+        user = configuration.get_user()
+        password = configuration.get_password()
+        port = configuration.get_port()
         self.connection = psycopg2.connect(host=host, database=database, user=user, password=password, port=port)
 
         self.get_collections_query = "SELECT * FROM collections"
@@ -22,13 +22,17 @@ class DataAccess:
         self.get_locations_query = "SELECT * FROM locations WHERE collection_id = %s"
         self.get_location_by_id_query = "SELECT * FROM locations WHERE collection_id = %s AND location_id = %s"
         self.get_location_by_name_query = "SELECT * FROM locations WHERE collection_id = %s AND name = %s"
-        self.add_location_query = "INSERT INTO locations (collection_id, name) VALUES (%s, %s) RETURNING location_id"
+        self.add_location_query = "INSERT INTO locations (collection_id, name, description) VALUES (%s, %s, " \
+                                  "%s) RETURNING location_id "
 
         self.get_cards_query = "SELECT * FROM cards WHERE collection_id = %s AND location_id = %s"
         self.get_card_by_id_query = "SELECT * FROM cards WHERE collection_id = %s AND location_id = %s AND card_id = %s"
         self.get_card_by_name_query = "SELECT * FROM cards WHERE collection_id = %s AND location_id = %s AND name = %s"
         self.add_card_query = "INSERT INTO cards (collection_id, location_id, name, edition, condition, is_foil) " \
                               "VALUES (%s, %s, %s, %s, %s, %s) RETURNING card_id "
+
+    def __del__(self):
+        self.connection.close()
 
     def get_collections(self):
         with self.connection.cursor() as cursor:
@@ -58,7 +62,8 @@ class DataAccess:
             cursor.execute(self.add_collection_query, (name,))
             row = cursor.fetchone()
             collection = Collection(row[0], name)
-            return collection
+            self.connection.commit()
+            return collection.collection_id
 
     def get_locations(self, collection_id):
         with self.connection.cursor() as cursor:
@@ -83,12 +88,13 @@ class DataAccess:
             location = Location(row[0], row[1], row[2])
             return location
 
-    def add_location(self, collection_id, name):
+    def add_location(self, collection_id, name, description):
         with self.connection.cursor() as cursor:
-            cursor.execute(self.add_location_query, (collection_id, name))
+            cursor.execute(self.add_location_query, (collection_id, name, description))
             row = cursor.fetchone()
-            location = Location(row[0], name, collection_id)
-            return location
+            location = Location(row[0], name, description, collection_id)
+            self.connection.commit()
+            return location.location_id
 
     def get_cards(self, collection_id, location_id):
         with self.connection.cursor() as cursor:
@@ -118,4 +124,5 @@ class DataAccess:
             cursor.execute(self.add_card_query, (collection_id, location_id, name, edition, condition, is_foil))
             row = cursor.fetchone()
             card = Card(row[0], name, edition, condition, is_foil, location_id)
-            return card
+            self.connection.commit()
+            return card.card_id
