@@ -7,7 +7,7 @@ from Domain.Card import Card as DomainCard
 
 
 def map_domain_collection_list_to_model_collections_list(domain_collection_list):
-    mapped_model_collection_list = None
+    mapped_model_collection_list = []
     for domain_collection in domain_collection_list:
         mapped_model_collection = map_domain_collection_to_model_collection(domain_collection)
         mapped_model_collection_list.append(mapped_model_collection)
@@ -28,7 +28,7 @@ def map_model_collection_to_domain_collection(model_collection):
 
 
 def map_domain_location_list_to_model_location_list(domain_location_list):
-    mapped_model_location_list = None
+    mapped_model_location_list = []
     for domain_location in domain_location_list:
         mapped_model_location = map_domain_location_to_model_location(domain_location)
         mapped_model_location_list.append(mapped_model_location)
@@ -39,7 +39,7 @@ def map_domain_location_to_model_location(domain_location):
     mapped_model_location = ModelLocation()
     mapped_model_location.location_id = domain_location.location_id
     mapped_model_location.name = domain_location.name
-    mapped_model_location.descriptions = domain_location.descriptions
+    mapped_model_location.description = domain_location.description
     return mapped_model_location
 
 
@@ -53,7 +53,7 @@ def map_model_location_to_domain_location(model_location, collection_id):
 
 
 def map_domain_card_list_to_model_card_list(domain_card_list):
-    mapped_model_card_list = None
+    mapped_model_card_list = []
     for domain_card in domain_card_list:
         mapped_model_card = map_domain_card_to_model_card(domain_card)
         mapped_model_card_list.append(mapped_model_card)
@@ -61,6 +61,8 @@ def map_domain_card_list_to_model_card_list(domain_card_list):
 
 
 def map_domain_card_to_model_card(domain_card):
+    if domain_card is None:
+        return None
     mapped_model_card = ModelCard()
     mapped_model_card.card_id = domain_card.card_id
     mapped_model_card.name = domain_card.name

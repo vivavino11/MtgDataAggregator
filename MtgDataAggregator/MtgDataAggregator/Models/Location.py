@@ -5,4 +5,4 @@ from dataclasses import dataclass
 class Location:
     location_id: int = -1
     name: str = None
-    descriptions: str = ""
+    description: str = ""

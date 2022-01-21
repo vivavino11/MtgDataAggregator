@@ -54,7 +54,7 @@ class MtgDataAggregatorBusinessComponent:
         return card
 
     def add_card(self, collection_id, location_id, card):
-        card_id = self.data_access.add_card(collection_id, location_id, card)
+        card_id = self.data_access.insert_card(collection_id, location_id, card)
         return card_id
 
 

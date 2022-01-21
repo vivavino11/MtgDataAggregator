@@ -3,6 +3,9 @@
 
 from flask import Flask, jsonify, url_for
 from flask import request
+
+from Models.Card import Card
+from Models.Location import Location
 from MtgDataAggregatorBusinessComponent import MtgDataAggregatorBusinessComponent
 from DataAccess import DataAccess
 from DatabaseConfig import DatabaseConfig
@@ -24,16 +27,16 @@ def get_collections():
         data_access = DataAccess(configuration)
         business_component = MtgDataAggregatorBusinessComponent(data_access)
         collections = business_component.get_collections()
-        if collections is None:
+        if len(collections) == 0:
             return "No Collections Found", 404
         else:
-            return collections, 200
+            return jsonify(collections), 200
     except Exception as ex:
         # ToDo: Add Logging
         return "Internal Server Error", 500
 
 
-@app.route("/collections/<collection_id>)", methods=["GET"])
+@app.route("/collections/<collection_id>", methods=["GET"])
 def get_collection_by_id(collection_id):
     try:
         configuration = DatabaseConfig()
@@ -43,7 +46,7 @@ def get_collection_by_id(collection_id):
         if collection is None:
             return "No Collection Found", 404
         else:
-            return collection, 200
+            return jsonify(collection), 200
     except Exception as ex:
         # ToDo: Add Logging
         return "Internal Server Error", 500
@@ -52,13 +55,12 @@ def get_collection_by_id(collection_id):
 @app.route("/collections", methods=['POST'])
 def add_collection():
     try:
-        collection = request.form["collection"]
         configuration = DatabaseConfig()
         data_access = DataAccess(configuration)
         business_component = MtgDataAggregatorBusinessComponent(data_access)
-        created_collection_id = business_component.add_collection(collection.name)
-        return url_for(get_collection_by_id, collection_id=created_collection_id), 201
-    except Exception as ex:
+        created_collection_id = business_component.add_collection(request.json['name'])
+        return url_for('get_collection_by_id', collection_id=created_collection_id), 201
+    except Exception as e:
         # ToDo: Add Logging
         return "Internal Server Error", 500
 
@@ -69,11 +71,11 @@ def get_locations(collection_id):
         configuration = DatabaseConfig()
         data_access = DataAccess(configuration)
         business_component = MtgDataAggregatorBusinessComponent(data_access)
-        collection = business_component.get_locations(collection_id)
-        if collection is None:
+        locations = business_component.get_locations(collection_id)
+        if len(locations) == 0:
             return "No Collection Found", 404
         else:
-            return collection, 200
+            return jsonify(locations), 200
     except Exception as ex:
         # ToDo: Add Logging
         return "Internal Server Error", 500
@@ -89,7 +91,7 @@ def get_location_by_id(collection_id, location_id):
         if location is None:
             return "No lcoation found", 404
         else:
-            return location, 200
+            return jsonify(location), 200
     except Exception as ex:
         # ToDo: Add Logging
         return "Internal Server Error", 500
@@ -98,49 +100,35 @@ def get_location_by_id(collection_id, location_id):
 @app.route("/collections/<collection_id>/locations", methods=['POST'])
 def add_location(collection_id):
     try:
-        location = request.form["location"]
+        raw_location = Location(request.json['name'], request.json['description'])
         configuration = DatabaseConfig()
         data_access = DataAccess(configuration)
         business_component = MtgDataAggregatorBusinessComponent(data_access)
-        created_location_id = business_component.add_location(collection_id, location)
-        return url_for(get_location_by_id, location=created_location_id), 201
+        created_location_id = business_component.add_location(collection_id, raw_location)
+        return url_for('get_location_by_id', collection_id=collection_id, location_id=created_location_id), 201
     except Exception as ex:
-        # ToDo: Add Logging
         return "Internal Server Error", 500
-    return "test"
 
 
 @app.route("/collections/<collection_id>/locations/<location_id>/cards", methods=['GET', 'POST'])
-def get_cards_or_add_card(collection_id, location_id):
-    if request.method == 'POST':
-        try:
-            card = request.form["card"]
-            configuration = DatabaseConfig()
-            data_access = DataAccess(configuration)
-            business_component = MtgDataAggregatorBusinessComponent(data_access)
-            created_card_id = business_component.add_card(collection_id, location_id, card)
-            return url_for(get_card, collection_id=collection_id,
-                           location_id=location_id, card_id=created_card_id), 201
-        except Exception as ex:
-            # ToDo: Add Logging
-            return "Internal Server Error", 500
-    else:
-        try:
-            configuration = DatabaseConfig()
-            data_access = DataAccess(configuration)
-            business_component = MtgDataAggregatorBusinessComponent(data_access)
-            cards = business_component.get_cards(collection_id, location_id)
-            if cards is None:
-                return "No Cards Found", 404
-            else:
-                return cards, 200
-        except Exception as ex:
-            # ToDo: Add Logging
-            return "Internal Server Error", 500
+def get_cards(collection_id, location_id):
+
+    try:
+        configuration = DatabaseConfig()
+        data_access = DataAccess(configuration)
+        business_component = MtgDataAggregatorBusinessComponent(data_access)
+        cards = business_component.get_cards(collection_id, location_id)
+        if len(cards) == 0:
+            return "No Cards Found", 404
+        else:
+            return jsonify(cards), 200
+    except Exception as ex:
+        # ToDo: Add Logging
+        return "Internal Server Error", 500
 
 
 @app.route("/collections/<collection_id>/locations/<location_id>/cards/<card_id>", methods=['GET'])
-def get_card(collection_id, location_id, card_id):
+def get_card_by_id(collection_id, location_id, card_id):
     try:
         configuration = DatabaseConfig()
         data_access = DataAccess(configuration)
@@ -149,9 +137,24 @@ def get_card(collection_id, location_id, card_id):
         if card is None:
             return "No card found", 404
         else:
-            return card, 200
+            return jsonify(card), 200
+    except Exception as ex:
+        # ToDo: Add Logging
+        return str(ex), 500
+        return "Internal Server Error", 500
+
+
+@app.route("/collections/<collection_id>/locations/<location_id>/cards", methods=["POST"])
+def add_card(collection_id, location_id):
+    try:
+        raw_card = Card(request.json['name'], request.json['edition'], request.json['condition'], request.json['is_foil'])
+        configuration = DatabaseConfig()
+        data_access = DataAccess(configuration)
+        business_component = MtgDataAggregatorBusinessComponent(data_access)
+        created_card_id = business_component.add_card(collection_id, location_id, raw_card)
+        return url_for('get_card_by_id', collection_id=collection_id,
+                   location_id=location_id, card_id=created_card_id), 201
     except Exception as ex:
         # ToDo: Add Logging
         return "Internal Server Error", 500
-
 
